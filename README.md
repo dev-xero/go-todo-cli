@@ -6,44 +6,52 @@ A light-weight and fast in-memory todo-list command-line application, written in
 ```bash
 AVAILABLE COMMANDS:
 
-todo > new [to-do]
+todo > new: [item]
 todo > list
-todo > check [index]
-todo > remove [index]
+todo > check: [index]
+todo > remove: [index]
 todo > clear
+todo > quit
 ```
 
 ### 1. Adding an item
-add an item to the todo-list, use `new` or `:n`:
+add an item to the todo-list, use `new:` or `n:`:
 ```bash
-todo > new [item]
-todo > :n [item]
+todo > new: [item]
+todo > n: [item]
 ```
 
 ### 2. Listing all items
-to list every item in the todo-list, use `list` or `:l`:
+to list every item in the todo-list, use `list:` or `l:`:
 ```bash
 todo > list
-todo > :l
+todo > l
 ```
 
 ### 3. Completing to-dos
-to complete a to-do, use `done` or `:d`:
+To complete a to-do, use `done:` or `d:`:
 ```bash
-todo > done [index]
-todo > :d [index]
+todo > done: [number]
+todo > d: [number]
 ```
 
 ### 4. Removing to-dos
-to remove a to-do, use `remove` or `:r`:
+to remove a to-do, use `remove:` or `r:`:
 ```bash
-todo > remove [index]
-todo > :r [index]
+todo > remove: [number]
+todo > r: [number]
 ```
 
 ### 5. Clearing all items
-to clear the todo-list, use `clear` or `:c`:
+To clear the todo-list, use `clear` or `c`:
 ```bash
 todo > clear
-todo > :c
+todo > c
+```
+
+### 6. Quitting the program
+To quit the program, use `quit` or `q`:
+```bash
+todo > quit
+todo > q
 ```
