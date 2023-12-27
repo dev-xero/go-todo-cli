@@ -3,4 +3,6 @@ version: '3'
 tasks:
   build:
     cmds:
+      - go fmt ./...
+      - go vet ./...
       - go build -o build/app ./app/main.go
