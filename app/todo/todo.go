@@ -43,6 +43,19 @@ func complete_todo(index int, todolist *[]Todo) {
 	(*todolist)[index] = modified_todo_item
 }
 
+// Change done property for fall todos
+func complete_all_todos(todolist *[]Todo) {
+	for index, todo_item := range *todolist {
+		todo_item.done = true
+		(*todolist)[index] = todo_item
+	}
+}
+
+// Remove todo item from todolist
+func remove_todo(index int, todolist *[]Todo) {
+	(*todolist) = append((*todolist)[:index], (*todolist)[index+1:]...)
+}
+
 // Read user input and format them
 func read_user_input(scanner *bufio.Scanner) (bool, string, string) {
 	var command, item string
@@ -88,6 +101,27 @@ func command_handler(command string, item string, todolist *[]Todo) bool {
 	}
 
 	if command == "done" || command == "d" {
+		if item == "all" {
+			complete_all_todos(todolist)
+		} else {
+			var number, err = strconv.Atoi(item)
+
+			// Handle any errors during conversion
+			if err != nil {
+				fmt.Println("Invalid index received.")
+			}
+
+			if number > 0 && number <= len(*todolist) {
+				complete_todo(number-1, todolist)
+			}
+		}
+	}
+
+	if command == "clear" || command == "c" {
+		*todolist = []Todo{}
+	}
+
+	if command == "remove" || command == "r" {
 		var number, err = strconv.Atoi(item)
 
 		// Handle any errors during conversion
@@ -96,7 +130,7 @@ func command_handler(command string, item string, todolist *[]Todo) bool {
 		}
 
 		if number > 0 && number <= len(*todolist) {
-			complete_todo(number-1, todolist)
+			remove_todo(number-1, todolist)
 		}
 	}
 
