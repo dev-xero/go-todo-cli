@@ -8,7 +8,7 @@ AVAILABLE COMMANDS:
 
 todo > new: [item]
 todo > list
-todo > check: [index]
+todo > done: [index]
 todo > remove: [index]
 todo > clear
 todo > quit
