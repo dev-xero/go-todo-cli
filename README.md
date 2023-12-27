@@ -31,8 +31,8 @@ todo > l
 ### 3. Completing to-dos
 To complete a to-do, use `done:` or `d:`:
 ```bash
-todo > done: [number]
-todo > d: [number]
+todo > done: [number] or all
+todo > d: [number] or all
 ```
 
 ### 4. Removing to-dos
