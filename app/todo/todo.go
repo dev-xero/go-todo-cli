@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -24,6 +25,14 @@ func list_todos(todolist *[]Todo) {
 	for i, todo := range *todolist {
 		fmt.Printf("\t[%d] %s\n", i+1, todo.item)
 	}
+}
+
+// Change done property to true
+func complete_todo(index int, todolist *[]Todo) {
+	modified_todo_item := (*todolist)[index]
+	modified_todo_item.done = true
+
+	(*todolist)[index] = modified_todo_item
 }
 
 // Read user input and format them
@@ -70,9 +79,23 @@ func command_handler(command string, item string, todolist *[]Todo) bool {
 		return true
 	}
 
+	if command == "done" || command == "d" {
+		var number, err = strconv.Atoi(item)
+
+		// Handle any errors during conversion
+		if err != nil {
+			fmt.Println("Invalid index received.")
+		}
+
+		if number > -1 && number < len(*todolist) {
+			complete_todo(number-1, todolist)
+		}
+	}
+
 	return true
 }
 
+// Initialize the todo to listen for commands
 func Initialize() {
 	var todolist []Todo
 	var scanner *bufio.Scanner = bufio.NewScanner(os.Stdin)
