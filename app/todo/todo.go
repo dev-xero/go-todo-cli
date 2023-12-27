@@ -6,6 +6,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/fatih/color"
 )
 
 // The todo data type
@@ -23,7 +25,13 @@ func add_item(item string, todolist *[]Todo) {
 // List all items in the todolist
 func list_todos(todolist *[]Todo) {
 	for i, todo := range *todolist {
-		fmt.Printf("\t[%d] %s\n", i+1, todo.item)
+		var format string = "\t[%d] %s\n"
+		if todo.done {
+			var green = color.New(color.Faint).Add(color.CrossedOut)
+			green.Printf(format, i+1, todo.item)
+		} else {
+			fmt.Printf(format, i+1, todo.item)
+		}
 	}
 }
 
@@ -87,7 +95,7 @@ func command_handler(command string, item string, todolist *[]Todo) bool {
 			fmt.Println("Invalid index received.")
 		}
 
-		if number > -1 && number < len(*todolist) {
+		if number > 0 && number <= len(*todolist) {
 			complete_todo(number-1, todolist)
 		}
 	}
