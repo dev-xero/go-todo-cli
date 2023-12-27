@@ -1,5 +1,5 @@
 # `GO TODO CLI`
-A light-weight and fast in-memory todo-list command-line application, written in GO.
+A light-weight, fast, in-memory todo-list command-line application, written in GO.
 
 ## Usage
 
