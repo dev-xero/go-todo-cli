@@ -17,18 +17,18 @@ type Todo struct {
 }
 
 // Add an item to the todolist
-func add_item(item string, todolist *[]Todo) {
-	var todo_item = Todo{item: item}
-	*todolist = append(*todolist, todo_item)
+func addItem(item string, todolist *[]Todo) {
+	var todoItem = Todo{item: item}
+	*todolist = append(*todolist, todoItem)
 }
 
 // List all items in the todolist
-func list_todos(todolist *[]Todo) {
+func listTodos(todolist *[]Todo) {
 	for i, todo := range *todolist {
 		var format string = "\t[%d] %s\n"
 		if todo.done {
-			var green = color.New(color.Faint).Add(color.CrossedOut)
-			green.Printf(format, i+1, todo.item)
+			var crossedOverText = color.New(color.Faint).Add(color.CrossedOut)
+			crossedOverText.Printf(format, i+1, todo.item)
 		} else {
 			fmt.Printf(format, i+1, todo.item)
 		}
@@ -36,28 +36,28 @@ func list_todos(todolist *[]Todo) {
 }
 
 // Change done property to true
-func complete_todo(index int, todolist *[]Todo) {
-	modified_todo_item := (*todolist)[index]
-	modified_todo_item.done = true
+func completeTodo(index int, todolist *[]Todo) {
+	modifiedTodoItem := (*todolist)[index]
+	modifiedTodoItem.done = true
 
-	(*todolist)[index] = modified_todo_item
+	(*todolist)[index] = modifiedTodoItem
 }
 
 // Change done property for fall todos
-func complete_all_todos(todolist *[]Todo) {
-	for index, todo_item := range *todolist {
-		todo_item.done = true
-		(*todolist)[index] = todo_item
+func completeAllTodos(todolist *[]Todo) {
+	for index, todoItem := range *todolist {
+		todoItem.done = true
+		(*todolist)[index] = todoItem
 	}
 }
 
 // Remove todo item from todolist
-func remove_todo(index int, todolist *[]Todo) {
+func removeTodo(index int, todolist *[]Todo) {
 	(*todolist) = append((*todolist)[:index], (*todolist)[index+1:]...)
 }
 
 // Read user input and format them
-func read_user_input(scanner *bufio.Scanner) (bool, string, string) {
+func readUserInput(scanner *bufio.Scanner) (bool, string, string) {
 	var command, item string
 
 	fmt.Print("todo > ")
@@ -84,25 +84,25 @@ func read_user_input(scanner *bufio.Scanner) (bool, string, string) {
 }
 
 // Handle commands, returns true to continue, false to quit
-func command_handler(command string, item string, todolist *[]Todo) bool {
+func commandHandler(command string, item string, todolist *[]Todo) bool {
 	if command == "quit" || command == "q" {
 		fmt.Println("Exit program")
 		return false
 	}
 
 	if command == "new" || command == "n" {
-		add_item(item, todolist)
+		addItem(item, todolist)
 		return true
 	}
 
 	if command == "list" || command == "l" {
-		list_todos(todolist)
+		listTodos(todolist)
 		return true
 	}
 
 	if command == "done" || command == "d" {
 		if item == "all" {
-			complete_all_todos(todolist)
+			completeAllTodos(todolist)
 		} else {
 			var number, err = strconv.Atoi(item)
 
@@ -112,7 +112,7 @@ func command_handler(command string, item string, todolist *[]Todo) bool {
 			}
 
 			if number > 0 && number <= len(*todolist) {
-				complete_todo(number-1, todolist)
+				completeTodo(number-1, todolist)
 			}
 		}
 	}
@@ -130,7 +130,7 @@ func command_handler(command string, item string, todolist *[]Todo) bool {
 		}
 
 		if number > 0 && number <= len(*todolist) {
-			remove_todo(number-1, todolist)
+			removeTodo(number-1, todolist)
 		}
 	}
 
@@ -143,14 +143,14 @@ func Initialize() {
 	var scanner *bufio.Scanner = bufio.NewScanner(os.Stdin)
 
 	for {
-		success, command, item := read_user_input(scanner)
+		success, command, item := readUserInput(scanner)
 		if !success {
 			break
 		}
 
-		should_continue := command_handler(command, item, &todolist)
+		shouldContinue := commandHandler(command, item, &todolist)
 
-		if !should_continue {
+		if !shouldContinue {
 			break
 		}
 	}
