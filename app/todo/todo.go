@@ -26,9 +26,10 @@ func addItem(item string, todolist *[]Todo) {
 func listTodos(todolist *[]Todo) {
 	for i, todo := range *todolist {
 		var format string = "\t[%d] %s\n"
+
 		if todo.done {
-			var crossedOverText = color.New(color.Faint).Add(color.CrossedOut)
-			crossedOverText.Printf(format, i+1, todo.item)
+			var crossedOutText = color.New(color.Faint).Add(color.CrossedOut)
+			crossedOutText.Printf(format, i+1, todo.item)
 		} else {
 			fmt.Printf(format, i+1, todo.item)
 		}
@@ -126,7 +127,7 @@ func commandHandler(command string, item string, todolist *[]Todo) bool {
 
 		// Handle any errors during conversion
 		if err != nil {
-			fmt.Println("Invalid index received.")
+			fmt.Println("Invalid number received.")
 		}
 
 		if number > 0 && number <= len(*todolist) {
